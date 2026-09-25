@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Env & secrets
+.env
+
+# Jupyter
+*.ipynb_checkpoints
+
+# Данные (большие файлы)
+data/*.xlsx
+data/*.csv
+*.sql.gz
+
+# Docker
+postgres_data/
+superset_home/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Большие экспорты Superset (дубликаты)
+docker/dashboard_backup_*/
+docker/dashboard_export_*/.pytest_cache/
