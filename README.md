@@ -1,4 +1,5 @@
 # ABC/XYZ анализ ассортимента интернет-магазина Online Retail II
+[![CI](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml)
 
 Аналитический проект по оптимизации товарного портфеля британского интернет-магазина подарков. Цель — оценить структуру ассортимента и предложить список SKU-кандидатов на сокращение с оценкой рисков.
 
