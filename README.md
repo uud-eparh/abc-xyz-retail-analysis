@@ -34,7 +34,7 @@
 ### 1. Клонирование и настройка
 
 ```bash
-git clone <repo>
+git clone https://github.com/uud-eparh/abc-xyz-retail-analysis.git
 cd abc_xyz
 
 # Виртуальное окружение
