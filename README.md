@@ -51,8 +51,8 @@ PostgreSQL 16 · Python 3.11 (pandas, numpy, matplotlib, seaborn) · Jupyter · 
 ### 1. Клонирование и настройка
 
 ```bash
-git clone https://github.com/uud-eparh/abc-xyz-retail-analysis.git
-cd abc-xyz-retail-analysis
+git clone <repo>
+cd abc_xyz
 
 python -m venv .venv
 source .venv/Scripts/activate   # Windows
