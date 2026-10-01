@@ -211,4 +211,8 @@ abc-xyz-retail-analysis/
 
 ## 👤 Автор
 
+<<<<<<< HEAD
 **Алексей** — [GitHub @uud-eparh](https://github.com/uud-eparh)
+=======
+**Алексей** — [GitHub @uud-eparh](https://github.com/uud-eparh)
+>>>>>>> 3bbe953e2897a4298c9fd6b37a0dcfffa64ac453
