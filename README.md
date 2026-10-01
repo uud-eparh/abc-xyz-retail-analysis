@@ -1,18 +1,26 @@
 # ABC/XYZ анализ ассортимента интернет-магазина Online Retail II
-[![CI](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml)
 
-Аналитический проект по оптимизации товарного портфеля британского интернет-магазина подарков. Цель — оценить структуру ассортимента и предложить список SKU-кандидатов на сокращение с оценкой рисков.
+[![CI — Lint & Test](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/uud-eparh/abc-xyz-retail-analysis/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![PostgreSQL](https://img.shields.io/badge/postgresql-16-336791)
+![Apache Superset](https://img.shields.io/badge/superset-3.1-orange)
+
+Аналитический проект по оптимизации товарного портфеля британского
+интернет-магазина подарков. Цель — оценить структуру ассортимента
+и предложить список SKU-кандидатов на сокращение с оценкой рисков.
 
 ## 📋 Бизнес-задача
 
-Руководство магазина рассматривает сокращение ассортимента на **~20%**. Задача: оценить риски такого решения и найти SKU-кандидаты, которые действительно можно безопасно вывести из ассортимента.
+Руководство магазина рассматривает сокращение ассортимента на **~20%**.
+Задача: оценить риски такого решения и найти SKU-кандидаты, которые
+действительно можно безопасно вывести из ассортимента.
 
 ## 📊 Данные
 
 - **Источник:** [Online Retail II (UCI ML Repository)](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
-- **Период:** 01.12.2009 — 09.12.2011 (25 месяцев).
-- **Объём:** 1 067 371 транзакция, 5 305 SKU, 5 942 клиента.
-- **После очистки:** 1 036 925 строк, 4 895 SKU, 5 852 клиента.
+- **Период:** 01.12.2009 — 09.12.2011 (25 месяцев)
+- **Объём:** 1 067 371 транзакция, 5 305 SKU, 5 942 клиента
+- **После очистки:** 1 036 925 строк, 4 895 SKU, 5 852 клиента
 
 ### Скачивание данных
 
@@ -22,24 +30,33 @@
 2. Скачайте файл `online_retail_II.xlsx`.
 3. Положите его в папку `data/`:
 
+```
+abc-xyz-retail-analysis/
+└── data/
+    └── online_retail_II.xlsx   ← сюда
+```
+
+4. Запустите загрузку:
+
+```bash
+python scripts/load_data.py
+```
+
 ## 🛠️ Технологии
 
-- **PostgreSQL 16** — хранение данных (Docker).
-- **Python 3.11** — pandas, numpy, matplotlib, seaborn.
-- **Jupyter** — анализ и визуализация.
-- **Apache Superset 3.1** — интерактивный дашборд (Docker).
+PostgreSQL 16 · Python 3.11 (pandas, numpy, matplotlib, seaborn) · Jupyter · Apache Superset 3.1 · Docker
 
 ## 🚀 Как запустить
 
 ### 1. Клонирование и настройка
 
 ```bash
-git clone <repo>
-cd abc_xyz
+git clone https://github.com/uud-eparh/abc-xyz-retail-analysis.git
+cd abc-xyz-retail-analysis
 
-# Виртуальное окружение
 python -m venv .venv
 source .venv/Scripts/activate   # Windows
+# source .venv/bin/activate     # Linux/Mac
 pip install -r requirements.txt
 ```
 
@@ -47,8 +64,8 @@ pip install -r requirements.txt
 
 ```bash
 docker-compose up -d
-# Postgres → порт 6432
-# Superset → порт 8088
+# PostgreSQL → порт 6432
+# Superset   → порт 8088
 ```
 
 ### 3. Загрузка данных
@@ -62,25 +79,23 @@ python scripts/load_data.py
 Последовательно, каждый с Restart Kernel:
 
 ```
-notebooks/01_data_exploration.ipynb  → sales
-notebooks/02_business_overview.ipynb → метрики + графики
-notebooks/03_abc_analysis.ipynb      → abc
-notebooks/04_xyz_analysis.ipynb      → xyz
-notebooks/05_abc_xyz_matrix.ipynb    → abc_xyz
-notebooks/06_strategy.ipynb          → strategies
-notebooks/07_candidates.ipynb        → candidates (678)
-notebooks/08_impact_estimation.ipynb → candidates_final (443)
-notebooks/09_bonus_rfm.ipynb         → rfm
-notebooks/10_bonus_bcg.ipynb         → bcg
-notebooks/11_bonus_basket.ipynb      → basket_pairs
+notebooks/01_data_exploration.ipynb   → sales
+notebooks/02_business_overview.ipynb  → метрики + графики
+notebooks/03_abc_analysis.ipynb       → abc
+notebooks/04_xyz_analysis.ipynb       → xyz
+notebooks/05_abc_xyz_matrix.ipynb     → abc_xyz
+notebooks/06_strategy.ipynb           → strategies
+notebooks/07_candidates.ipynb         → candidates (678)
+notebooks/08_impact_estimation.ipynb  → candidates_final (443)
+notebooks/09_bonus_rfm.ipynb          → rfm
+notebooks/10_bonus_bcg.ipynb          → bcg
+notebooks/11_bonus_basket.ipynb       → basket_pairs
 ```
 
 ### 5. Дашборд Superset
 
 - URL: http://localhost:8088 (admin / admin)
-- Settings → Import Dashboards → выбрать `docker/dashboards.zip`.
-
-## Дашборд Superset
+- Settings → Import Dashboards → выбрать `docker/dashboards.zip`
 
 ![Superset Dashboard](reports/dashboard_superset.jpg)
 
@@ -118,23 +133,23 @@ notebooks/11_bonus_basket.ipynb      → basket_pairs
 
 **Предлагаем сократить 443 SKU (9.05% ассортимента).**
 
-- **Их выручка:** £53 558 (**0.27% от общей**).
-- **Рычаг:** **34x** (удаляем в 34 раза больше SKU, чем теряем выручки).
+- **Их выручка:** £53 558 (**0.27% от общей**)
+- **Рычаг:** **34x** (удаляем в 34 раза больше SKU, чем теряем выручки)
 
 ### Путь формирования списка
 
-1. **Начало:** CZ (2 426 SKU).
-2. **Умеренный фильтр:** 678 SKU.
-3. **Исключение сезонных:** 235 SKU.
-4. **Финальный список:** **443 SKU**.
+1. **Начало:** CZ (2 426 SKU)
+2. **Умеренный фильтр:** 678 SKU
+3. **Исключение сезонных:** 235 SKU
+4. **Финальный список:** **443 SKU**
 
 ### Критерии отбора
 
-- **Возраст** ≥ 12 мес.
-- **Клиентская база** ≤ 10.
-- **Повторные покупки** = 0.
-- **Активные месяцы** ≤ 18.
-- **Не сезонные** (пик ноя-дек < 50% выручки).
+- Возраст ≥ 12 мес.
+- Клиентская база ≤ 10
+- Повторные покупки = 0
+- Активные месяцы ≤ 18
+- Не сезонные (пик ноя-дек < 50% выручки)
 
 ## ⚠️ Ограничения
 
@@ -143,40 +158,57 @@ notebooks/11_bonus_basket.ipynb      → basket_pairs
 - **Нет данных о марже.** Часть SKU могут быть высокомаржинальными.
 - **Список 443 SKU — кандидаты**, требуют ручной проверки менеджером.
 
+## 📝 Допущения
+
+1. **Отмены** (invoice_no LIKE 'C%') исключены из анализа продаж — они не отражают реальный спрос.
+2. **Дубликаты строк** оставлены — повторная покупка одного товара в одном счёте валидна.
+3. **Служебные SKU** (POST, DOT, M, ADJUST, gift-сертификаты и др.) исключены — это не товары.
+4. **Сезонные товары** (пик ноя-дек > 50% выручки) исключены из финала — их удаление сломало бы новогодний ассортимент.
+5. **Товары без CustomerID** оставлены для ABC/XYZ, но исключены из RFM.
+6. **Нет данных о марже и остатках** — часть кандидатов могут быть высокомаржинальными.
+
+## 📦 Что в этом репозитории
+
+- **11 Jupyter-ноутбуков** — полный пайплайн анализа (очистка → ABC/XYZ → RFM → BCG → basket)
+- **15+ визуализаций** — в папке `reports/`
+- **Superset-дашборд** — `docker/dashboards.zip` (13 чартов)
+- **Docker Compose** — Postgres + Superset, воспроизводимо одной командой
+- **Тесты** — `pytest tests/`
+- **CI/CD** — GitHub Actions (lint, test)
+
 ## 📁 Структура проекта
 
 ```
-abc_xyz/
-├── data/
-│   └── online_retail_II.xlsx
-├── notebooks/          # 11 ноутбуков по этапам
+abc-xyz-retail-analysis/
+├── .github/workflows/ci.yml
+├── data/                       # (скачать, не в git)
+├── docker/
+│   ├── dashboards.zip
+│   └── superset_config.py
+├── notebooks/                  # 11 ноутбуков
+├── reports/                    # 15+ PNG графиков
 ├── scripts/
 │   ├── db_config.py
 │   └── load_data.py
-├── docker/
-│   ├── superset_config.py
-│   ├── dashboards.zip  # экспорт дашборда
-│   └── docker-compose.yml
-├── reports/            # 15+ графиков PNG
-├── sql/
-├── requirements.txt
-├── .env
-└── README.md
+├── tests/
+│   ├── __init__.py
+│   └── test_basic.py
+├── .env.example
+├── .flake8
+├── .gitignore
+├── docker-compose.yml
+├── pyproject.toml
+├── README.md
+└── requirements.txt
 ```
-
-## 🔗 Ссылки
-
-- **Дашборд Superset:** http://localhost:8088
-- **Графики:** `reports/*.png`
-- **Датасет:** [Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
 ## 📚 Что можно улучшить
 
 1. **Данные о марже** — пересчитать приоритеты с учётом прибыли.
 2. **Basket analysis на всех SKU** — углубить понимание корзины.
 3. **Прогнозирование спроса** — добавить ML для сезонности.
-4. **Real-time интеграция** — CDC через Debezium, чтобы обновлять данные без перезагрузки.
+4. **Real-time интеграция** — CDC через Debezium.
 
 ## 👤 Автор
 
-**Алексей** — [https://github.com/uud-eparh/](#) 
+**Алексей** — [GitHub @uud-eparh](https://github.com/uud-eparh)
