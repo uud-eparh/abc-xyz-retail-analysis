@@ -76,6 +76,10 @@ python scripts/load_data.py
 
 ### 4. Прогон ноутбуков
 
+```bash
+python scripts/pipeline.py
+```
+
 Последовательно, каждый с Restart Kernel:
 
 ```
