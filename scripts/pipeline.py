@@ -1,40 +1,79 @@
 """
-Единый пайплайн обработки данных.
+Пайплайн анализа ассортимента Online Retail II.
 
-Запуск: python scripts/pipeline.py
+Последовательный запуск этапов:
+1. Загрузка данных
+2. Очистка (sales)
+3. ABC-анализ
+4. XYZ-анализ
+5. Матрица ABC/XYZ
+6. Стратегии
+7. Кандидаты
+8. Оценка эффекта
 """
-from scripts.db_config import execute_sql, read_sql
 
-# Параметры
-START_DATE = "2009-12-01"
-END_DATE = "2011-11-30"  # 24 полных месяца
+import subprocess
+import sys
+from pathlib import Path
 
-def normalize_stock_codes():
-    """Нормализация: UPPER(stock_code)."""
-    execute_sql(f"""
-        UPDATE raw_transactions
-        SET stock_code = UPPER(stock_code);
-    """)
+ROOT_DIR = Path(__file__).parent.parent
+NOTEBOOKS_DIR = ROOT_DIR / "notebooks"
 
-def build_sales():
-    """sales с единым периодом."""
-    execute_sql(f"""
-        CREATE TABLE sales AS
-        SELECT
-            UPPER(stock_code) AS stock_code,
-            ...
-        FROM raw_transactions
-        WHERE
-            invoice_no NOT LIKE 'C%'
-            AND quantity > 0
-            AND unit_price > 0
-            AND invoice_date >= '{START_DATE}'
-            AND invoice_date <= '{END_DATE}'
-            ...
-    """)
 
-def build_candidates():
-    """Кандидаты с учётом всех замечаний."""
-    ...
+def run_notebook(notebook_path: Path) -> None:
+    """Запускает ноутбук и проверяет успешность выполнения."""
+    print(f"Запуск {notebook_path.name}...")
 
-# и т.д.
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "jupyter",
+            "nbconvert",
+            "--to",
+            "notebook",
+            "--execute",
+            "--inplace",
+            str(notebook_path),
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        print("Ошибка при выполнении ноутбука:")
+        print(result.stderr)
+        sys.exit(1)
+
+    print("OK\n")
+
+
+def main() -> None:
+    """Запускает все ноутбуки по порядку."""
+    notebooks = [
+        "01_data_exploration.ipynb",
+        "02_business_overview.ipynb",
+        "03_abc_analysis.ipynb",
+        "04_xyz_analysis.ipynb",
+        "05_abc_xyz_matrix.ipynb",
+        "06_strategy.ipynb",
+        "07_candidates.ipynb",
+        "08_impact_estimation.ipynb",
+        "09_bonus_basket.ipynb",
+        "10_bonus_bcg.ipynb",
+        "11_bonus_basket.ipynb",
+        "11b_basket_v2.ipynb",
+    ]
+
+    for nb_name in notebooks:
+        nb_path = NOTEBOOKS_DIR / nb_name
+        if not nb_path.exists():
+            print(f"Ноутбук не найден: {nb_path}")
+            sys.exit(1)
+        run_notebook(nb_path)
+
+    print("Пайплайн завершён успешно.")
+
+
+if __name__ == "__main__":
+    main()
