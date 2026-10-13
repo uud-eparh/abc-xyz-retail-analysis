@@ -102,7 +102,7 @@ URL: http://localhost:8088 (admin / admin)
 
 Settings → Import Dashboards → выбрать `docker/dashboards.zip`
 
-![Дашборд Superset](https://reports/dashboard_superset.jpg)
+![Дашборд Superset](reports/dashboard_superset.jpg)
 
 ## 📈 Ключевые результаты
 
