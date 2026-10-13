@@ -93,7 +93,8 @@ def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
         raise ValueError(f"Отсутствуют колонки: {missing}")
 
     df["invoice_no"] = df["invoice_no"].astype(str)
-    df["stock_code"] = df["stock_code"].astype(str)
+    df["stock_code"] = df["stock_code"].astype(str).str.upper().str.strip()
+    df["description"] = df["description"].astype(str)
     df["description"] = df["description"].astype(str)
     df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce")
     df["invoice_date"] = pd.to_datetime(df["invoice_date"], errors="coerce")
